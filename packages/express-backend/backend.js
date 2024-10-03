@@ -1,8 +1,12 @@
 // backend.js
 import express from "express";
+import cors from "cors";
 
 const app = express();
 const port = 8000;
+
+app.use(cors()); 
+app.use(express.json());
 
 const findUserByName = (name) => {
   return users["users_list"].filter(
@@ -12,6 +16,11 @@ const findUserByName = (name) => {
 
 const findUserById = (id) =>
   users["users_list"].find((user) => user["id"] === id);
+
+const addUser = (user) => {
+  users["users_list"].push(user);
+  return user;
+};
 
 app.get("/users", (req, res) => {
   const name = req.query.name;
@@ -34,7 +43,11 @@ app.get("/users/:id", (req, res) => {
   }
 });
 
-app.use(express.json());
+app.post("/users", (req, res) => {
+  const userToAdd = req.body;
+  addUser(userToAdd);
+  res.send();
+});
 
 app.listen(port, () => {
   console.log(
@@ -68,7 +81,7 @@ const users = {
       id: "zap555",
       name: "Dennis",
       job: "Bartender"
-    }
+    },
   ]
 };
 
