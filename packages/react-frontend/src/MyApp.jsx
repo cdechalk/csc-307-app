@@ -38,10 +38,22 @@ function MyApp() {
   }
    
   function removeOneCharacter(index) {
-    const updated = characters.filter((character, i) => {
-      return i !== index;
-    });
-    setCharacters(updated);
+    const userId = characters[index].id;
+
+    fetch(`http://localhost:8000/users/${userId}`, { method: "DELETE" })
+      .then((response) => {
+        if (response.status === 204) {
+          const updated = characters.filter((character, i) => i !== index);
+          setCharacters(updated);
+        } else if (response.status === 404) {
+          throw new Error("User not found.");
+        } else {
+          throw new Error("Failed to delete the user.")
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   function updateList(person) {
