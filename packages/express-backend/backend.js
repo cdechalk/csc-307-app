@@ -74,6 +74,7 @@ app.get("/users/:id", (req, res) => {
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
+  userToAdd.id = generateId(); //generate id when user is posted
   addUser(userToAdd);
   res.status(201).send(userToAdd);
 });
