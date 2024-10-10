@@ -56,7 +56,7 @@ function MyApp() {
         }
       })
 
-      .then(() => setCharacters([...characters, person]))
+      .then((newUser) => setCharacters([...characters, newUser]))
       .catch((error) => {
         console.log(error);
     })
