@@ -1,10 +1,16 @@
 // backend.js
 import express from "express";
+import cors from "cors";
 
 const app = express();
 const port = 8000;
 
+app.use(cors());
 app.use(express.json());
+
+const generateId = () => {
+  return Math.random().toString(36).substring(2,8);
+};
 
 const findUserByName = (name) => {
   return users["users_list"].filter(
@@ -22,6 +28,7 @@ const findUserById = (id) =>
   users["users_list"].find((user) => user["id"] === id);
 
 const addUser = (user) => {
+  user.id = generateId(); //generate id when user is added
   users["users_list"].push(user);
   return user;
 };
@@ -68,7 +75,7 @@ app.get("/users/:id", (req, res) => {
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
   addUser(userToAdd);
-  res.send();
+  res.status(201).send(userToAdd);
 });
 
 app.delete("/users/:id", (req, res) => {
