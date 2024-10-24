@@ -54,4 +54,5 @@ export {
   findUserByName,
   findUserByJob,
   findUserByNameAndJob,
+  deleteUserById,
 };

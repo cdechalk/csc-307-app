@@ -7,7 +7,9 @@ import {
   getUsers,
   findUserById,
   findUserByName,
-  findUserByJob, findUserByNameAndJob
+  findUserByJob, 
+  findUserByNameAndJob,
+  deleteUserById
 } from "./Models/user-services.js";
 
 const app = express();
